@@ -1,3 +1,7 @@
+# Usage
+# invoke-webrequest -uri https://raw.githubusercontent.com/jeremybusk/demofiles/main/prephost.ps1 -outfile prephost.ps1
+# ./prephost.ps1
+
 $ErrorActionPreference = "Stop"
 $authorizedKey="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCJYiHQpVLyxZwqNk6BEW+q2ZPEPP2hzHQ91KgrhF9j demolt"
 
