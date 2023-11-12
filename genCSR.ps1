@@ -1,5 +1,6 @@
+## certreq -submit -attrib "CertificateTemplate:WebServer" .\myhost.csr
 ## PowerShell Script to generate a Certificate Signing Request (CSR) using the SHA256 (SHA-256) signature algorithm and a 2048 bit key size (RSA) via the Cert Request Utility (certreq) ##
-## certreq -submit -attrib "CertificateTemplate:WebServer" .\a.req
+
 <#
 
 .SYNOPSIS
@@ -61,9 +62,9 @@ Do {
 $i++
     $request['SAN'][$i] = read-host "Subject Alternative Name $i (e.g. alt.company.com / leave empty for none)"
     if ($request['SAN'][$i] -eq "") {
-
+    
     }
-
+    
 } until ($request['SAN'][$i] -eq "")
 
 # Remove the last in the array (which is empty)
@@ -73,15 +74,15 @@ $request['SAN'].Remove($request['SAN'].Count)
 # Create the settings.inf
 #########################
 $settingsInf = "
-[Version]
-Signature=`"`$Windows NT`$
-[NewRequest]
+[Version] 
+Signature=`"`$Windows NT`$ 
+[NewRequest] 
 KeyLength =  2048
-Exportable = TRUE
-MachineKeySet = TRUE
+Exportable = TRUE 
+MachineKeySet = TRUE 
 SMIME = FALSE
-RequestType =  PKCS10
-ProviderName = `"Microsoft RSA SChannel Cryptographic Provider`"
+RequestType =  PKCS10 
+ProviderName = `"Microsoft RSA SChannel Cryptographic Provider`" 
 ProviderType =  12
 HashAlgorithm = sha256
 ;Variables
@@ -98,15 +99,15 @@ Subject = `"CN={{CN}},OU={{OU}},O={{O}},L={{L}},S={{S}},C={{C}}`"
 "
 
 $request['SAN_string'] = & {
-        if ($request['SAN'].Count -gt 0) {
-                $san = "2.5.29.17 = `"{text}`"
+	if ($request['SAN'].Count -gt 0) {
+		$san = "2.5.29.17 = `"{text}`"
 "
-                Foreach ($sanItem In $request['SAN'].Values) {
-                        $san += "_continue_ = `"dns="+$sanItem+"&`"
+		Foreach ($sanItem In $request['SAN'].Values) {
+			$san += "_continue_ = `"dns="+$sanItem+"&`"
 "
-                }
-                return $san
-        }
+		}
+		return $san
+	}
 }
 
 $settingsInf = $settingsInf.Replace("{{CN}}",$request['CN']).Replace("{{O}}",$request['O']).Replace("{{OU}}",$request['OU']).Replace("{{L}}",$request['L']).Replace("{{S}}",$request['S']).Replace("{{C}}",$request['C']).Replace("{{SAN}}",$request['SAN_string'])
@@ -149,8 +150,8 @@ Write-Host "
 # Set the Clipboard (Optional)
 Write-Host "Copy CSR to clipboard? (y|n): " -ForegroundColor Yellow -NoNewline
 if ((Read-Host) -ieq "y") {
-        $csr | clip
-        Write-Host "Check your ctrl+v
+	$csr | clip
+	Write-Host "Check your ctrl+v
 "
 }
 
