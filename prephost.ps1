@@ -18,6 +18,9 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Wi
 Set-Service -Name sshd -StartupType Automatic
 start-service sshd
 
+New-NetFirewallRule -DisplayName "ALLOW WinRM HTTPS/TCP/5986" -Direction inbound -Profile Any -Action Allow -LocalPort 5986 -Protocol TCP
+New-NetFirewallRule -DisplayName "ALLOW SSH/TCP/22" -Direction inbound -Profile Any -Action Allow -LocalPort 22 -Protocol TCP
+
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 choco install -y vim
