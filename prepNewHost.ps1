@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 # Usage
-# invoke-webrequest -uri https://raw.githubusercontent.com/jeremybusk/demofiles/main/newHost.ps1 -outfile prepNewHost.ps1
+# invoke-webrequest -uri https://raw.githubusercontent.com/jeremybusk/demofiles/main/prepNewHost.ps1 -outfile prepNewHost.ps1
 # ./prepNewHost.ps1
 
 hostname
