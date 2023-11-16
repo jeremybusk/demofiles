@@ -3,6 +3,7 @@ $ErrorActionPreference = "Stop"
 # invoke-webrequest -uri https://raw.githubusercontent.com/jeremybusk/demofiles/main/newHost.ps1 -outfile prepNewHost.ps1
 # ./prepNewHost.ps1
 
+hostname
 $upHours=((get-date) - (gcim Win32_OperatingSystem).LastBootUpTime).TotalHours
 Write-Output "Host Up Hours = ${upHours}"
 
