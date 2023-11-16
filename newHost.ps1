@@ -11,16 +11,13 @@ $SUMO_TOKEN = Read-Host "Enter Sumo Logic registration token" -MaskInput
 $SSHD_AUTHORIZED_KEY = Read-Host "Enter SSHD Admin Authorized key" -MaskInput
 
 
-function add_sumo {
-  $install_dir="C:\tmp\sumo"
+function add_sumo { 
   $hostname=((hostname).tolower())
-  mkdir -p ${install_dir}
-
   # [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12'
   [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls12'
   Invoke-WebRequest 'https://collectors.us2.sumologic.com/rest/download/win64' -outfile 'C:\Windows\Temp\SumoCollector.exe'
-  Invoke-WebRequest 'https://raw.githubusercontent.com/jeremybusk/sumologic/master/windows_default_sources.json' -outfile "$install_dir\sources.json"
-  C:\Windows\Temp\SumoCollector.exe -console -q "-Vclobber=${SUMO_CLOBBER}" "-Vsumo.token_and_url=${SUMO_TOKEN}" "-Vcollector.name=${hostname}_events" "-Vsources=${install_dir}\"
+  Invoke-WebRequest 'https://raw.githubusercontent.com/jeremybusk/sumologic/master/windows_default_sources.json' -outfile "$env:TEMP\sources.json"
+  C:\Windows\Temp\SumoCollector.exe -console -q "-Vclobber=${SUMO_CLOBBER}" "-Vsumo.token_and_url=${SUMO_TOKEN}" "-Vcollector.name=${hostname}_events" "-Vsources=$env:TEMP\"
 }
 
 
@@ -71,6 +68,9 @@ join_ad
 
 
 # Notes #####
+  # $install_dir="C:\tmp\sumo"
+  # mkdir -p ${install_dir}
+  # New-Item -ItemType Directory -Force -Path ${install_dir}
 ## ssh user1@example.com@host1.example.com
 ## remove by doing:
 ## rm -fo -r C:\ProgramData\chocolatey
