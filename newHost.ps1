@@ -20,7 +20,7 @@ function add_sumo {
   }
   
   Invoke-WebRequest 'https://raw.githubusercontent.com/jeremybusk/sumologic/master/windows_default_sources.json' -outfile "$env:TEMP\sources.json"
-  $env:TEMP\SumoCollector.exe -console -q "-Vclobber=${SUMO_CLOBBER}" "-Vsumo.token_and_url=${SUMO_TOKEN}" "-Vcollector.name=${hostname}_events" "-Vsources=$env:TEMP\"
+  & $env:TEMP\SumoCollector.exe -console -q "-Vclobber=${SUMO_CLOBBER}" "-Vsumo.token_and_url=${SUMO_TOKEN}" "-Vcollector.name=${hostname}_events" "-Vsources=$env:TEMP\"
 }
 
 
