@@ -11,13 +11,16 @@ $SUMO_TOKEN = Read-Host "Enter Sumo Logic registration token" -MaskInput
 $SSHD_AUTHORIZED_KEY = Read-Host "Enter SSHD Admin Authorized key" -MaskInput
 
 
-function add_sumo { 
+function add_sumo {
   $hostname=((hostname).tolower())
   # [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12'
   [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls12'
-  Invoke-WebRequest 'https://collectors.us2.sumologic.com/rest/download/win64' -outfile 'C:\Windows\Temp\SumoCollector.exe'
+  if ( !(Test-Path $env:TEMP\SumoCollector.exe) ) {
+    Invoke-WebRequest 'https://collectors.us2.sumologic.com/rest/download/win64' -outfile '$env:TEMP\SumoCollector.exe'
+  }
+  
   Invoke-WebRequest 'https://raw.githubusercontent.com/jeremybusk/sumologic/master/windows_default_sources.json' -outfile "$env:TEMP\sources.json"
-  C:\Windows\Temp\SumoCollector.exe -console -q "-Vclobber=${SUMO_CLOBBER}" "-Vsumo.token_and_url=${SUMO_TOKEN}" "-Vcollector.name=${hostname}_events" "-Vsources=$env:TEMP\"
+  $env:TEMP\SumoCollector.exe -console -q "-Vclobber=${SUMO_CLOBBER}" "-Vsumo.token_and_url=${SUMO_TOKEN}" "-Vcollector.name=${hostname}_events" "-Vsources=$env:TEMP\"
 }
 
 
