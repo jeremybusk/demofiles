@@ -3,6 +3,10 @@ $ErrorActionPreference = "Stop"
 # invoke-webrequest -uri https://raw.githubusercontent.com/jeremybusk/demofiles/main/newHost.ps1 -outfile newHost.ps1
 # ./newHost.ps1
 
+$upHours=((get-date) - (gcim Win32_OperatingSystem).LastBootUpTime).TotalHours
+Write-Output "Host Up Hours = ${upHours}"
+
+
 $AD_DOMAIN = Read-Host "Enter AD Domain"
 $AD_USER = Read-Host "Enter AD User"
 $AD_PASS = Read-Host "Enter AD Password" -AsSecureString
