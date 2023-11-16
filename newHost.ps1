@@ -16,7 +16,7 @@ function add_sumo {
   # [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12'
   [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls12'
   if ( !(Test-Path $env:TEMP\SumoCollector.exe) ) {
-    Invoke-WebRequest 'https://collectors.us2.sumologic.com/rest/download/win64' -outfile '$env:TEMP\SumoCollector.exe'
+    Invoke-WebRequest 'https://collectors.us2.sumologic.com/rest/download/win64' -outfile "$env:TEMP\SumoCollector.exe"
   }
   
   Invoke-WebRequest 'https://raw.githubusercontent.com/jeremybusk/sumologic/master/windows_default_sources.json' -outfile "$env:TEMP\sources.json"
