@@ -60,7 +60,7 @@ function join_ad {
   # rm pass.txt
   $ad_username = "${AD_DOMAIN}\${AD_USER}" 
   $credential = New-Object System.Management.Automation.PSCredential(${ad_username},${AD_PASS})
-  Add-Computer -DomainName $domain -Credential $credential -restart
+  Add-Computer -DomainName ${AD_DOMAIN} -Credential $credential -restart
 }
 
 add_sumo
