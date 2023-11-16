@@ -14,13 +14,13 @@ $SSHD_AUTHORIZED_KEY = Read-Host "Enter SSHD Admin Authorized key" -MaskInput
 function add_sumo {
   $install_dir="C:\tmp\sumo"
   $hostname=((hostname).tolower())
-  mkdir -p $install_dir
+  mkdir -p ${install_dir}
 
   # [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12'
   [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls12'
   Invoke-WebRequest 'https://collectors.us2.sumologic.com/rest/download/win64' -outfile 'C:\Windows\Temp\SumoCollector.exe'
   Invoke-WebRequest 'https://raw.githubusercontent.com/jeremybusk/sumologic/master/windows_default_sources.json' -outfile "$install_dir\sources.json"
-  C:\Windows\Temp\SumoCollector.exe -console -q "-Vclobber=${SUMO_CLOBBER}" "-Vsumo.token_and_url=${SUMO_TOKEN}" "-Vcollector.name=${hostname}_events" "-Vsources=$install_dir\"
+  C:\Windows\Temp\SumoCollector.exe -console -q "-Vclobber=${SUMO_CLOBBER}" "-Vsumo.token_and_url=${SUMO_TOKEN}" "-Vcollector.name=${hostname}_events" "-Vsources=${install_dir}\"
 }
 
 
@@ -55,7 +55,7 @@ function join_ad {
   # $password = Get-Content pass.txt | ConvertTo-SecureString -asPlainText -Force
   # rm pass.txt
   $ad_username = "${AD_DOMAIN}\${AD_USER}" 
-  $credential = New-Object System.Management.Automation.PSCredential(${ad_username},${AD_PASS)
+  $credential = New-Object System.Management.Automation.PSCredential(${ad_username},${AD_PASS})
   Add-Computer -DomainName $domain -Credential $credential -restart
 }
 
