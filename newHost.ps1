@@ -11,7 +11,7 @@ $SUMO_TOKEN = Read-Host "Enter Sumo Logic registration token" -MaskInput
 $SSHD_AUTHORIZED_KEY = Read-Host "Enter SSHD Admin Authorized key" -MaskInput
 
 
-function add_sumo(){
+function add_sumo {
   $install_dir="C:\tmp\sumo"
   $hostname=((hostname).tolower())
   mkdir -p $install_dir
@@ -24,7 +24,7 @@ function add_sumo(){
 }
 
 
-function add_sshd(){
+function add_sshd {
   (New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 
   # Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
@@ -42,14 +42,14 @@ function add_sshd(){
   New-NetFirewallRule -DisplayName "ALLOW SSH/TCP/22" -Direction inbound -Profile Any -Action Allow -LocalPort 22 -Protocol TCP
 }
 
-function add_choco(){
+function add_choco {
   Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
   choco install -y vim
 }
 
 
-function join_ad(){
+function join_ad {
   # $domain = "example.com"
   # $password = "ChangeMe" | ConvertTo-SecureString -asPlainText -Force
   # $password = Get-Content pass.txt | ConvertTo-SecureString -asPlainText -Force
