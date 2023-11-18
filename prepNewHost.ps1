@@ -66,7 +66,8 @@ function join_ad {
 
 function enable_winrm_https_5986 {
   # NOTE: Certificate to match get must already exist on the windows host. TODO add this function
-  $HN="host1.example.com";
+  # $HN="host1.example.com"
+  $HN=(hostname)
   $TP=(Get-ChildItem -Path Cert:LocalMachine\MY | where Subject -like "CN=${HN}*").Thumbprint
   winrm delete winrm/config/Listener?Address=*+Transport=HTTPS
   winrm create winrm/config/Listener?Address=*+Transport=HTTPS "@{Hostname=`"${HN}`"; CertificateThumbprint=`"$TP`"}"
