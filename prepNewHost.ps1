@@ -64,7 +64,7 @@ function join_ad {
   Add-Computer -DomainName ${AD_DOMAIN} -Credential $credential -restart
 }
 
-enable_winrm_https_5986 {
+function enable_winrm_https_5986 {
   # NOTE: Certificate to match get must already exist on the windows host. TODO add this function
   $HN="host1.example.com";
   $TP=(Get-ChildItem -Path Cert:LocalMachine\MY | where Subject -like "CN=${HN}*").Thumbprint
